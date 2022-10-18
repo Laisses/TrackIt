@@ -5,4 +5,6 @@ export const BG_COLOR = "#F2F2F2";
 export const LIGHT_GREY = "#CFCFCF";
 export const GREEN = "#8FC549";
 
+export const PRIMARY_FONT = "'Lexend Deca', sans-serif";
+
 export const BASE_URL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit";
