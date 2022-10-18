@@ -13,4 +13,6 @@ export const Habitos = () => {
 
 const Div = styled.div`
     color: darkblue;
+    height: 300px;
+    background-color: darkgreen;
 `;
