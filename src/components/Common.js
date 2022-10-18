@@ -34,3 +34,10 @@ export const TextInput = styled.input`
         padding-left: 10px;
     }
 `;
+
+export const Logo = styled.img`
+    margin-top: 68px;
+    margin-bottom: 32px;
+    width: 180px;
+    height: 178px;
+`;

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import logo from "../assets/images/logo.png";
-import { BigButton, LinkContainer, TextInput } from "./Common";
+import { BigButton, LinkContainer, TextInput, Logo } from "./Common";
 
 export const Login = () => {    
     return (
@@ -20,9 +20,3 @@ const LoginContainer = styled.div`
     align-items: center;
 `;
 
-const Logo = styled.img`
-    margin-top: 68px;
-    margin-bottom: 32px;
-    width: 180px;
-    height: 178px;
-`;
