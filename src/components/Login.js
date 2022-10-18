@@ -1,15 +1,18 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../assets/images/logo.png";
 import { BigButton, LinkContainer, TextInput, Logo } from "./Common";
 
-export const Login = () => {    
+export const Login = () => {
     return (
         <LoginContainer>
             <Logo src={logo} alt="Track It logo" />
-            <TextInput placeholder="email"/>
-            <TextInput placeholder="senha"/>
+            <TextInput placeholder="email" />
+            <TextInput placeholder="senha" />
             <BigButton>Entrar</BigButton>
-            <LinkContainer>Não tem uma conta? Cadastre-se!</LinkContainer>
+            <LinkContainer to="/cadastro">
+                Não tem uma conta? Cadastre-se!
+            </LinkContainer>
         </LoginContainer>
     );
 };

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import {LIGHT_BLUE, PRIMARY_FONT, DARK_GREY} from "./constants";
 
@@ -12,7 +13,7 @@ export const BigButton = styled.button`
     border-radius: 5px;
 `;
 
-export const LinkContainer = styled.div`
+export const LinkContainer = styled(Link)`
     color: ${LIGHT_BLUE};
     font-family: ${PRIMARY_FONT};
     font-size: 14px;

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../assets/images/logo.png";
 import { BigButton, LinkContainer, TextInput, Logo } from "./Common";
@@ -11,7 +12,7 @@ export const SignUp = () => {
             <TextInput placeholder="nome" />
             <TextInput placeholder="foto" />
             <BigButton>Cadastrar</BigButton>
-            <LinkContainer>
+            <LinkContainer to="/">
                 Já tem uma conta? Faça login!
             </LinkContainer>
         </SignUpContainer>
