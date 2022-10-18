@@ -1,11 +1,16 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { DARK_BLUE, SECONDARY_FONT } from "./constants";
 
-export const Header = () => {    
+export const Header = () => {
     return (
         <Navbar>
-            <NavTitle>TrackIt</NavTitle>
-            <Profile alt="profile picture" src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Gull_portrait_ca_usa.jpg"/>
+            <NavTitle>
+                <Link to="/">
+                    TrackIt
+                </Link>
+            </NavTitle>
+            <Profile alt="profile picture" src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Gull_portrait_ca_usa.jpg" />
         </Navbar>
     );
 };
