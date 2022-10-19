@@ -30,9 +30,12 @@ export const TextInput = styled.input`
     border: 1px solid #D5D5D5;
     border-radius: 5px;
     margin-bottom: 6px;
+    padding-left: 10px;
     &::placeholder {
         color: #DBDBDB;
-        padding-left: 10px;
+    }
+    &:focus {
+        outline: none;
     }
 `;
 
