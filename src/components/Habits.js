@@ -3,41 +3,65 @@ import { useState } from "react";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { Title } from "./Common";
-import { DARK_BLUE, LIGHT_BLUE, PRIMARY_FONT, WEEKDAYS } from "./constants";
+import { LIGHT_BLUE, PRIMARY_FONT, WEEKDAYS } from "./constants";
 import { TextInput } from "./Common";
 
+const WEEKDAYS_COLORS = {
+    selected: {
+        backgroundColor: "#CFCFCF",
+        color: "#ffffff",
+        border: "1px solid #CFCFCF",
+    },
+    unselected: {
+        backgroundColor: "#ffffff",
+        color: "#DBDBDB",
+        border: "1px solid #D5D5D5",
+    }
+}
+
 export const Habits = () => {    
-    const initialState = {
-        isOpen: false,
-    };
-    
-    const [state, setState] = useState({initialState});
+    const [isOpen, setIsOpen] = useState(false);
+    const [daysChoosen, setDaysChoosen] = useState([]);   
 
     const openEntry = () => {
-        if (!state.isOpen) {
-            setState({
-                ...state,
-                isOpen: true,
-            })
+        if (!isOpen) {
+            setIsOpen(true);
         }
     };
 
     const closeEntry = () => {
-        if (state.isOpen) {
-            setState({
-                ...state,
-                isOpen: false,
-            })
+        if (isOpen) {
+            setIsOpen(false);
         }
     };
 
-    const HabitsEntry = () => {
+    const handleSelection = (day) => {
+        if(!daysChoosen.includes(day)) {
+            setDaysChoosen([...daysChoosen, day])
+        } else {
+            setDaysChoosen(daysChoosen.filter(d => d !== day))
+        }
+    };
+
+    const chooseColor = (day) => {
+        if (daysChoosen.includes(day)) {
+            return WEEKDAYS_COLORS.selected;
+        } else {
+            return WEEKDAYS_COLORS.unselected;
+        }
+    }
+ 
+    const Entry = () => {
         return (
             <EntryContainer>
                 <TextInput placeholder="nome do hábito" />
                 <DaysInput>
-                    {WEEKDAYS.map((e, i) =>
-                        <Day key={i}>{e}</Day>
+                    {WEEKDAYS.map((d, i) =>
+                        <Day 
+                            key={i}
+                            onClick={() => handleSelection(i)} 
+                            color={chooseColor(i)}>{d}
+                        </Day>
                     )}
                 </DaysInput>
                 <ButtonsContainer>
@@ -56,7 +80,7 @@ export const Habits = () => {
                     <Title>Meus hábitos</Title>
                     <EntryButton onClick={openEntry}>+</EntryButton>
                 </TitleContainer>
-                {state.isOpen && HabitsEntry()}
+                {isOpen && Entry()}
             </HabitsContainer>
             <Footer />
         </>
@@ -111,11 +135,11 @@ const Day = styled.li`
     justify-content: center;
     font-family: ${PRIMARY_FONT};
     font-size: 20px;
-    color: #DBDBDB;
-    background-color: #ffffff;
+    color: ${({ color }) => color.color};
+    background-color: ${({ color }) => color.backgroundColor};
+    border: ${({ color }) => color.border};
     width: 30px;
-    height: 30px;
-    border: 1px solid #D5D5D5;
+    height: 30px;    
     border-radius: 5px;
     margin-right: 4px;
 `;
