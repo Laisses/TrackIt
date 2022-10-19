@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import {LIGHT_BLUE, PRIMARY_FONT, DARK_GREY} from "./constants";
+import {LIGHT_BLUE, PRIMARY_FONT, DARK_GREY, DARK_BLUE} from "./constants";
 
 export const BigButton = styled.button`
     font-family: ${PRIMARY_FONT};
@@ -41,4 +41,10 @@ export const Logo = styled.img`
     margin-bottom: 32px;
     width: 180px;
     height: 178px;
+`;
+
+export const Title = styled.h2`
+font-family: ${PRIMARY_FONT};
+font-size: 23px;
+color: ${DARK_BLUE};    
 `;
