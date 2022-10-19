@@ -5,10 +5,8 @@ import { DARK_BLUE, SECONDARY_FONT } from "./constants";
 export const Header = () => {
     return (
         <Navbar>
-            <NavTitle>
-                <Link to="/">
-                    TrackIt
-                </Link>
+            <NavTitle to="/">
+                TrackIt
             </NavTitle>
             <Profile alt="profile picture" src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Gull_portrait_ca_usa.jpg" />
         </Navbar>
@@ -30,7 +28,7 @@ const Navbar = styled.nav`
     padding-left: 36px;
 `;
 
-const NavTitle = styled.h1`
+const NavTitle = styled(Link)`
     color: #ffffff;
     font-family: ${SECONDARY_FONT};
     font-size: 39px;
