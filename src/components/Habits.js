@@ -43,14 +43,6 @@ export const Habits = () => {
         }
     };
 
-    const chooseColor = (day) => {
-        if (daysChoosen.includes(day)) {
-            return WEEKDAYS_COLORS.selected;
-        } else {
-            return WEEKDAYS_COLORS.unselected;
-        }
-    }
- 
     const Entry = () => {
         return (
             <EntryContainer>
@@ -60,7 +52,9 @@ export const Habits = () => {
                         <Day 
                             key={i}
                             onClick={() => handleSelection(i)} 
-                            color={chooseColor(i)}>{d}
+                            color={daysChoosen.includes(i)
+                                ? WEEKDAYS_COLORS.selected
+                                : WEEKDAYS_COLORS.unselected}>{d}
                         </Day>
                     )}
                 </DaysInput>
