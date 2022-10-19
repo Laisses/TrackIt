@@ -12,7 +12,7 @@ export const Footer = () => {
             <Progress>
                 <CircularProgressbar
                     value={percentage}
-                    text={`${percentage}%`}
+                    text="Hoje"
                     background
                     backgroundPadding={6}
                     styles={buildStyles({
@@ -44,22 +44,13 @@ const Div = styled.div`
     position: fixed;
     bottom: 0;
     right: 0;
-
-    
-
-
-    margin-bottom: 600px;
 `;
+
 const Progress = styled.div`
     width: 90px;
     height: 90px;
     position: fixed;
     bottom: 10px;
     left: 50%;
-    margin-left: -45px;
-
-    margin-bottom: 600px;
+    margin-left: -45px;    
 `;
-
-//Lembrar de tirar os margin-bottom
-
