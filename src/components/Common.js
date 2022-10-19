@@ -58,3 +58,9 @@ export const Container = styled.div`
     padding-left: 18px;
     padding-right: 18px;
 `;
+
+export const Message = styled.p`
+font-family: ${PRIMARY_FONT};
+font-size: 18px;
+color: ${DARK_GREY};   
+`;

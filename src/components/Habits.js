@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useState } from "react";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
-import { Title, TextInput, Container } from "./Common";
+import { Title, TextInput, Container, Message } from "./Common";
 import { LIGHT_BLUE, DARK_GREY, PRIMARY_FONT, WEEKDAYS } from "./constants";
 import trashcan from "../assets/images/trashcan.png";
 
@@ -223,10 +223,4 @@ const SaveButton = styled.button`
     border: none;
     border-radius: 5px;
     margin-left: 20px;    
-`;
-
-const Message = styled.p`
-    font-family: ${PRIMARY_FONT};
-    font-size: 18px;
-    color: ${DARK_GREY};   
 `;
