@@ -24,13 +24,12 @@ export const SignUp = () => {
 
         axios.post(`${BASE_URL}/auth/sign-up`, body)
             .then((res) => {
-                console.log(res);
-                setLoading(false)
+                setLoading(false);
+                alert("Usuário cadastrado com sucesso!");
                 navigate("/");
             })
             .catch(err => {
-                alert(err.response.data.message);
-                console.log(err.response.data)
+                alert(err.response.data.message);                
                 setLoading(false);
             });
         setLoading(true);
