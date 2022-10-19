@@ -32,6 +32,7 @@ const NavTitle = styled(Link)`
     color: #ffffff;
     font-family: ${SECONDARY_FONT};
     font-size: 39px;
+    text-decoration: none;
 `;
 
 const Profile = styled.img`
