@@ -51,3 +51,10 @@ font-family: ${PRIMARY_FONT};
 font-size: 23px;
 color: ${DARK_BLUE};    
 `;
+
+export const Container = styled.div`
+    height: 100vh;
+    background-color: #F2F2F2;
+    padding-left: 18px;
+    padding-right: 18px;
+`;

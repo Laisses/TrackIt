@@ -2,9 +2,8 @@ import styled from "styled-components";
 import { useState } from "react";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
-import { Title } from "./Common";
+import { Title, TextInput, Container } from "./Common";
 import { LIGHT_BLUE, DARK_GREY, PRIMARY_FONT, WEEKDAYS } from "./constants";
-import { TextInput } from "./Common";
 import trashcan from "../assets/images/trashcan.png";
 
 const WEEKDAYS_COLORS = {
@@ -101,7 +100,7 @@ export const Habits = () => {
     return (
         <>
             <Header />
-            <HabitsContainer>
+            <Container>
                 <TitleContainer>
                     <Title>Meus hábitos</Title>
                     <EntryButton onClick={openEntry}>+</EntryButton>
@@ -110,22 +109,19 @@ export const Habits = () => {
                 {/* <Message>
                     Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!
                 </Message> */}
-                <List>
+                <div>
                     {dummyHabits.map(h => <ListOfHabits 
                         key={h.id}
                         name={h.name}
                         days={h.days}
                     />)}
-                </List>
-            </HabitsContainer>
+                </div>
+            </Container>
             <Footer />
         </>
     );
 };
 
-const List = styled.ul`
-    
-`;
 const Trashcan = styled.img`
     width: 13px;
     height: 15px;
@@ -150,13 +146,6 @@ const ListItem = styled.li`
     margin: 10px auto;    
     padding-left: 15px;
     position: relative;
-`;
-
-const HabitsContainer = styled.div`
-    height: 100vh;
-    background-color: #F2F2F2;
-    padding-left: 18px;
-    padding-right: 18px;
 `;
 
 const TitleContainer = styled.div`
