@@ -56,6 +56,7 @@ export const SignUp = () => {
         <SignUpContainer>
             <Logo src={logo} alt="Track It logo" />
             <TextInput
+                data-identifier="input-email"
                 name="email"
                 value={form.email}
                 onChange={handleForm}
@@ -64,6 +65,7 @@ export const SignUp = () => {
                 required
             />
             <TextInput
+                data-identifier="input-password"
                 name="password"
                 value={form.password}
                 onChange={handleForm}
@@ -73,6 +75,7 @@ export const SignUp = () => {
                 required
             />
             <TextInput
+                data-identifier="input-name"
                 name="name"
                 value={form.name}
                 onChange={handleForm}
@@ -81,6 +84,7 @@ export const SignUp = () => {
                 required
             />
             <TextInput
+                data-identifier="input-photo"
                 name="image"
                 value={form.image}
                 onChange={handleForm}
@@ -94,7 +98,7 @@ export const SignUp = () => {
                 </BigButton>
                 : <Loading />}
 
-            <LinkContainer to="/">
+            <LinkContainer data-identifier="back-to-login-action" to="/">
                 Já tem uma conta? Faça login!
             </LinkContainer>
         </SignUpContainer>
