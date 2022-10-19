@@ -6,4 +6,6 @@ export const GREEN = "#8FC549";
 export const PRIMARY_FONT = "'Lexend Deca', sans-serif";
 export const SECONDARY_FONT = "'Playball', cursive";
 
+export const WEEKDAYS = ["D", "S", "T", "Q", "Q", "S", "S"];
+
 export const BASE_URL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit";
