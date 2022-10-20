@@ -2,22 +2,10 @@ import styled from "styled-components";
 import { useState } from "react";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
-import { Title, TextInput, Container, Message } from "./Common";
+import { Habit } from "./Habit";
+import { Title, Container, Message, WEEKDAYS_COLORS } from "./Common";
 import { LIGHT_BLUE, DARK_GREY, PRIMARY_FONT, WEEKDAYS } from "./constants";
 import trashcan from "../assets/images/trashcan.png";
-
-const WEEKDAYS_COLORS = {
-    selected: {
-        backgroundColor: "#CFCFCF",
-        color: "#ffffff",
-        border: "1px solid #CFCFCF",
-    },
-    unselected: {
-        backgroundColor: "#ffffff",
-        color: "#DBDBDB",
-        border: "1px solid #D5D5D5",
-    }
-}
 
 const dummyHabits = [
 	{
@@ -33,52 +21,13 @@ const dummyHabits = [
 ];
 
 export const Habits = () => {
-    const [isOpen, setIsOpen] = useState(false);
-    const [daysChoosen, setDaysChoosen] = useState([]);
+    const [isOpen, setIsOpen] = useState(false);    
 
     const openEntry = () => {
         if (!isOpen) {
             setIsOpen(true);
         }
-    };
-
-    const closeEntry = () => {
-        if (isOpen) {
-            setIsOpen(false);
-            setDaysChoosen([]);
-        }
-    };
-
-    const handleSelection = (day) => {
-        if (!daysChoosen.includes(day)) {
-            setDaysChoosen([...daysChoosen, day])
-        } else {
-            setDaysChoosen(daysChoosen.filter(d => d !== day))
-        }
-    };
-
-    const Entry = () => {
-        return (
-            <EntryContainer>
-                <TextInput placeholder="nome do hábito" />
-                <DaysInput>
-                    {WEEKDAYS.map((d, i) =>
-                        <Day
-                            key={i}
-                            onClick={() => handleSelection(i)}
-                            color={daysChoosen.includes(i)
-                                ? WEEKDAYS_COLORS.selected
-                                : WEEKDAYS_COLORS.unselected}>{d}
-                        </Day>
-                    )}
-                </DaysInput>
-                <ButtonsContainer>
-                    <CancelButton onClick={closeEntry}>Cancelar</CancelButton>
-                    <SaveButton>Salvar</SaveButton>
-                </ButtonsContainer>
-            </EntryContainer>
-        );
-    };
+    };      
 
     const ListOfHabits = ({name, days}) => {
         return (
@@ -105,7 +54,7 @@ export const Habits = () => {
                     <Title>Meus hábitos</Title>
                     <EntryButton onClick={openEntry}>+</EntryButton>
                 </TitleContainer>
-                {isOpen && Entry()}
+                {isOpen && <Habit isOpen={isOpen} setIsOpen={setIsOpen}/>}
                 {/* <Message>
                     Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!
                 </Message> */}
@@ -167,19 +116,6 @@ const EntryButton = styled.button`
     border-radius: 5px;
 `;
 
-const EntryContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 340px;
-    height: 180px;
-    background-color: #ffffff;
-    margin-top: 20px;
-    margin-bottom: 30px;
-    padding-right: 20px;
-    padding-left: 20px;
-`;
-
 const DaysInput = styled.div`
     display: flex;
 `;
@@ -197,30 +133,4 @@ const Day = styled.div`
     height: 30px;    
     border-radius: 5px;
     margin-right: 4px;
-`;
-
-const ButtonsContainer = styled.div`
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 30px;    
-`;
-
-const CancelButton = styled.button`    
-    font-family: ${PRIMARY_FONT};
-    font-size: 16px;
-    color: ${LIGHT_BLUE};
-    background-color: #ffffff;
-    border: none;
-`;
-
-const SaveButton = styled.button`
-    font-family: ${PRIMARY_FONT};
-    font-size: 16px;
-    width: 84px;
-    height: 35px;
-    color: #ffffff;
-    background-color: ${LIGHT_BLUE};
-    border: none;
-    border-radius: 5px;
-    margin-left: 20px;    
 `;

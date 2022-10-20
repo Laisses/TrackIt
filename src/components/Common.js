@@ -94,3 +94,16 @@ const Loader = styled.div`
     border: none;
     border-radius: 5px;
 `;
+
+export const WEEKDAYS_COLORS = {
+    selected: {
+        backgroundColor: "#CFCFCF",
+        color: "#ffffff",
+        border: "1px solid #CFCFCF",
+    },
+    unselected: {
+        backgroundColor: "#ffffff",
+        color: "#DBDBDB",
+        border: "1px solid #D5D5D5",
+    }
+}
