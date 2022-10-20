@@ -7,10 +7,8 @@ import { ThreeDots } from "react-loader-spinner";
 import { TextInput, WEEKDAYS_COLORS } from "./Common";
 import { LIGHT_BLUE, PRIMARY_FONT, WEEKDAYS, BASE_URL } from "./constants";
 
-export const Habit = ({isOpen, setIsOpen}) => {
+export const Habit = ({isOpen, setIsOpen, days, setDays, name, setName}) => {
     
-    const [days, setDays] = useState([]);
-    const [name, setName] = useState("");
     const [loading, setLoading] = useState(false);
     const { user } = useContext(AppContext);
 

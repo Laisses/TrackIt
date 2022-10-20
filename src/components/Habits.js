@@ -21,7 +21,9 @@ const dummyHabits = [
 ];
 
 export const Habits = () => {
-    const [isOpen, setIsOpen] = useState(false);    
+    const [isOpen, setIsOpen] = useState(false);
+    const [days, setDays] = useState([]);
+    const [name, setName] = useState("");
 
     const openEntry = () => {
         if (!isOpen) {
@@ -46,6 +48,14 @@ export const Habits = () => {
         );
     };
 
+    const habitProps = {
+        isOpen,
+        setIsOpen,
+        days,
+        setDays,
+        name,
+        setName,
+    };
     return (
         <>
             <Header />
@@ -54,7 +64,7 @@ export const Habits = () => {
                     <Title>Meus hábitos</Title>
                     <EntryButton onClick={openEntry}>+</EntryButton>
                 </TitleContainer>
-                {isOpen && <Habit isOpen={isOpen} setIsOpen={setIsOpen}/>}
+                {isOpen && <Habit {...habitProps} />}
                 {/* <Message>
                     Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!
                 </Message> */}
