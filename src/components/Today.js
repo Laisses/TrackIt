@@ -61,7 +61,7 @@ export const Today = () => {
     const calculateProgress = () => {
         const totalValue = tasks.length;
         const doneTaks = tasks.filter(t => t.done === true);
-        const partialValue = doneTaks.length + 1;
+        const partialValue = doneTaks.length;
         return Math.round((partialValue * 100) / totalValue);
     }
 
@@ -71,16 +71,16 @@ export const Today = () => {
         if(!done) {
             try {
                 await axios.post(`${BASE_URL}/habits/${id}/check`, {}, config);
-                setProgress(calculateProgress())
                 await refreshHabits(user.token);
+                setProgress(calculateProgress)
             } catch (err) {
                 alert(err.response.data.message);
             }
         } else {
             try{
                 await axios.post(`${BASE_URL}/habits/${id}/uncheck`, {}, config);
-                setProgress(calculateProgress())
                 await refreshHabits(user.token);
+                setProgress(calculateProgress)
             } catch (err) {
                 alert(err.response.data.message);
             }
@@ -89,7 +89,7 @@ export const Today = () => {
 
     const DailyTasks = ({ id, name, done, current, highest }) => {
         return (
-            <List>
+            <List data-identifier="today-infos">
                 <div>
                     <SubTitle>{name}</SubTitle>
                     <P>
@@ -110,6 +110,7 @@ export const Today = () => {
                     </P>
                 </div>
                 <CheckMark
+                    data-identifier="done-habit-btn"
                     onClick={() => handleMarker(id, done)}
                     color={done
                         ? CHECKMARK_COLORS.done
