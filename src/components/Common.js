@@ -38,6 +38,10 @@ export const TextInput = styled.input`
     &:focus {
         outline: none;
     }
+    &:disabled {
+        color: #AFAFAF;
+        background-color: #f2f2f2;
+    }
 `;
 
 export const Logo = styled.img`
