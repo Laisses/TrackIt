@@ -1,8 +1,9 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { Title, Container } from "./Common";
+import { day } from "./Date";
 import { DARK_GREY, PRIMARY_FONT } from "./constants";
 import checkmark from "../assets/images/checkmark.png";
 
@@ -46,6 +47,13 @@ const CHECKMARK_COLORS = {
 }
 
 export const Today = () => {
+    const [date, setDate] = useState(undefined);
+    const [weekday, setWeekday] = useState(undefined);
+
+    useEffect(() => {
+        setDate(day.date);
+        setWeekday(day.weekday)
+    }, []);
 
     const Daily = ({ name, done, current, highest }) => {
         return (
@@ -84,7 +92,7 @@ export const Today = () => {
             <Header />
             <Container>
                 <TitleContainer>
-                    <Title>Segunda, 17/05</Title>
+                    <Title>{weekday}, {date}</Title>
                     <Subtitle>Nenhum hábito concluído ainda</Subtitle>
                 </TitleContainer>
                 <ul>

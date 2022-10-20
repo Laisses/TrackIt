@@ -8,4 +8,6 @@ export const SECONDARY_FONT = "'Playball', cursive";
 
 export const WEEKDAYS = ["D", "S", "T", "Q", "Q", "S", "S"];
 
+export const EXTENDED_WEEKDAYS = ["Domingo", "Sabado", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
+
 export const BASE_URL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit";
