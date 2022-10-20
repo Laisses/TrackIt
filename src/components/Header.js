@@ -1,14 +1,19 @@
-import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
+import { AppContext } from "./context";
+import { useContext } from "react";
 import { DARK_BLUE, SECONDARY_FONT } from "./constants";
 
 export const Header = () => {
+
+    const { user } = useContext(AppContext);
+
     return (
         <Navbar>
             <NavTitle to="/">
                 TrackIt
             </NavTitle>
-            <Profile alt="profile picture" src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Gull_portrait_ca_usa.jpg" />
+            <Profile src={user.image} alt="profile picture"/>
         </Navbar>
     );
 };
