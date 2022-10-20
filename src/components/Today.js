@@ -1,37 +1,15 @@
 import styled from "styled-components";
-import { useState, useEffect } from "react";
+import axios from "axios";
+import { useContext, useState, useEffect } from "react";
+import { AppContext } from "./context";
+import { useNavigate } from "react-router-dom";
+import { ThreeDots } from "react-loader-spinner";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
-import { Title, Container } from "./Common";
+import { Title, Container, Message } from "./Common";
 import { day } from "./Date";
-import { DARK_GREY, PRIMARY_FONT } from "./constants";
+import { DARK_GREY, LIGHT_BLUE, PRIMARY_FONT, BASE_URL } from "./constants";
 import checkmark from "../assets/images/checkmark.png";
-
-const dummyDailyHabits = [
-    {
-        "id": 1,
-        "name": "Ler",
-        "done": true,
-        "currentSequence": 3,
-        "highestSequence": 3
-    },
-
-    {
-        "id": 3,
-        "name": "Acordar",
-        "done": false,
-        "currentSequence": 1,
-        "highestSequence": 1
-    },
-
-    {
-        "id": 5,
-        "name": "Programar",
-        "done": true,
-        "currentSequence": 1,
-        "highestSequence": 4
-    }
-];
 
 const CHECKMARK_COLORS = {
     done: {
@@ -49,13 +27,37 @@ const CHECKMARK_COLORS = {
 export const Today = () => {
     const [date, setDate] = useState(undefined);
     const [weekday, setWeekday] = useState(undefined);
+    const [tasks, setTasks] = useState(undefined);
+    const { user, setUser } = useContext(AppContext);
+    const navigate = useNavigate();
+
+    const refreshHabits = async token => {
+        const config = { headers: { Authorization: `Bearer ${token}` } };
+
+        try {
+            const res = await axios.get(`${BASE_URL}/habits/today`, config);
+            setTasks(res.data);
+        } catch (err) {
+            alert(err.response.data.message);
+        }
+    };
 
     useEffect(() => {
         setDate(day.date);
-        setWeekday(day.weekday)
-    }, []);
+        setWeekday(day.weekday);
 
-    const Daily = ({ name, done, current, highest }) => {
+        const userStr = localStorage.getItem("user");
+        if (userStr) {
+            setUser(JSON.parse(userStr));
+        } else {
+            navigate("/");
+        }
+        if (user.token) {
+            refreshHabits(user.token);
+        }
+    }, [setUser, navigate, user.token]);
+
+    const DailyTasks = ({ name, done, current, highest }) => {
         return (
             <List>
                 <div>
@@ -85,6 +87,32 @@ export const Today = () => {
                 </CheckMark>
             </List>
         );
+    };
+
+    const DailyInfo = () => {
+        if (tasks === undefined) {
+            return (
+                <Loading />
+            );
+        } else if (tasks.length === 0) {
+            return (
+                <Message>
+                    Não encontramos nenhum hábito para você :(
+                </Message>
+            );
+        } else {
+            return (
+                <ul>
+                    {tasks.map(h => <DailyTasks
+                        key={h.id}
+                        name={h.name}
+                        done={h.done}
+                        current={h.currentSequence}
+                        highest={h.highestSequence}
+                    />)}
+                </ul>
+            );
+        }
     }
 
     return (
@@ -95,15 +123,7 @@ export const Today = () => {
                     <Title>{weekday}, {date}</Title>
                     <Subtitle>Nenhum hábito concluído ainda</Subtitle>
                 </TitleContainer>
-                <ul>
-                    {dummyDailyHabits.map(h => <Daily
-                        key={h.id}
-                        name={h.name}
-                        done={h.done}
-                        current={h.currentSequence}
-                        highest={h.highestSequence}
-                    />)}
-                </ul>
+                <DailyInfo />
             </Container>
             <Footer />
         </>
@@ -168,4 +188,33 @@ const P = styled.p`
     color: #666666;
     font-family: ${PRIMARY_FONT};
     font-size: 13px;
+`;
+
+const Loading = () => {
+    return (
+        <Loader>
+            <ThreeDots
+                height="80"
+                width="80"
+                radius="9"
+                color={LIGHT_BLUE}
+                ariaLabel="three-dots-loading"
+                wrapperStyle={{}}
+                wrapperClassName=""
+                visible={true}
+            />
+        </Loader>
+    );
+};
+
+const Loader = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+    height: 35px;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    margin-left: 20px;
 `;
