@@ -64,11 +64,12 @@ export const Habits = () => {
         return (
             <ListItem>
                 <Trashcan 
+                    data-identifier="delete-habit-btn"
                     src={trashcan} 
                     alt="ícone de deletar" 
                     onClick={() => deleteHabit(id)}
                     />
-                <SubTitle>{name}</SubTitle>
+                <SubTitle data-identifier="habit-name">{name}</SubTitle>
                 <DaysInput>
                     {WEEKDAYS.map((d, i) => <Day
                         key={i}
@@ -84,7 +85,7 @@ export const Habits = () => {
     const Info = () => {
         if (savedHabits == 0) {
             return (
-                <Message>
+                <Message data-identifier="no-habit-message">
                     Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!
                 </Message>
             );
@@ -122,7 +123,7 @@ export const Habits = () => {
             <Container>
                 <TitleContainer>
                     <Title>Meus hábitos</Title>
-                    <EntryButton onClick={openEntry}>+</EntryButton>
+                    <EntryButton data-identifier="create-habit-btn" onClick={openEntry}>+</EntryButton>
                 </TitleContainer>
                 {isOpen && <Habit {...habitProps} />}
                 <Info />

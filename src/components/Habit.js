@@ -60,6 +60,7 @@ export const Habit = ({isOpen, setIsOpen, days, setDays, name, setName, setRatar
     return (
         <EntryContainer>
             <TextInput 
+                data-identifier="input-habit-name"
                 placeholder="nome do hábito"
                 onChange={e => setName(e.target.value)}
                 value={name}
@@ -68,6 +69,7 @@ export const Habit = ({isOpen, setIsOpen, days, setDays, name, setName, setRatar
             <DaysInput>
                 {WEEKDAYS.map((d, i) =>
                     <Day
+                        data-identifier="week-day-btn"
                         key={i}
                         onClick={() => handleSelection(i)}
                         color={days.includes(i)
@@ -77,9 +79,9 @@ export const Habit = ({isOpen, setIsOpen, days, setDays, name, setName, setRatar
                 )}
             </DaysInput>
             <ButtonsContainer>
-                <CancelButton onClick={closeEntry}>Cancelar</CancelButton>
+                <CancelButton data-identifier="cancel-habit-create-btn" onClick={closeEntry}>Cancelar</CancelButton>
                 {!loading 
-                ? <SaveButton onClick={createNewHabit}>Salvar</SaveButton>
+                ? <SaveButton data-identifier="save-habit-create-btn" onClick={createNewHabit}>Salvar</SaveButton>
                 : <Loading />}                
             </ButtonsContainer>
         </EntryContainer>
