@@ -63,9 +63,13 @@ export const Login = () => {
                 type="password"
             />
             {!loading
-                ? <BigButton onClick={signIn}>Entrar</BigButton>
+                ? <BigButton
+                    data-identifier="login-btn"
+                    onClick={signIn}>
+                    Entrar
+                </BigButton>
                 : <Loading />}
-            <LinkContainer to="/cadastro">
+            <LinkContainer data-identifier="sign-up-action" to="/cadastro">
                 Não tem uma conta? Cadastre-se!
             </LinkContainer>
         </LoginContainer>
