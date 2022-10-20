@@ -22,7 +22,9 @@ function App() {
   const [progress, setProgress] = useState(0);
 
   return (
-    <AppContext.Provider value={{ user, setUser, progress, setProgress }}>
+    <AppContext.Provider
+      value={{ user, setUser, progress, setProgress }}
+    >
       <BrowserRouter>
         <GlobalStyle />
         <Routes>

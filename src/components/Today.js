@@ -57,7 +57,27 @@ export const Today = () => {
         }
     }, [setUser, navigate, user.token]);
 
-    const DailyTasks = ({ name, done, current, highest }) => {
+    const handleMarker = async (id, done) => {
+        const config = { headers: { Authorization: `Bearer ${user.token}`}};
+
+        if(!done) {
+            try {
+                await axios.post(`${BASE_URL}/habits/${id}/check`, {}, config);
+                await refreshHabits(user.token);
+            } catch (err) {
+                alert(err.response.data.message);
+            }
+        } else {
+            try{
+                await axios.post(`${BASE_URL}/habits/${id}/uncheck`, {}, config);
+                await refreshHabits(user.token);
+            } catch (err) {
+                alert(err.response.data.message);
+            }
+        }
+    };
+
+    const DailyTasks = ({ id, name, done, current, highest }) => {
         return (
             <List>
                 <div>
@@ -67,7 +87,7 @@ export const Today = () => {
                             color={done
                                 ? CHECKMARK_COLORS.done
                                 : CHECKMARK_COLORS.undone}>
-                            {current} {current > 1 ? "dias" : "dia"}
+                            {current} {current === 1 ? "dia" : "dias"}
                         </CurrentSpan>
                     </P>
                     <P>
@@ -75,11 +95,12 @@ export const Today = () => {
                             color={done && current === highest
                                 ? CHECKMARK_COLORS.done
                                 : CHECKMARK_COLORS.undone}>
-                            {highest} {highest > 1 ? "dias" : "dia"}
+                            {highest} {highest === 1 ? "dia" : "dias"}
                         </HighestSpan>
                     </P>
                 </div>
                 <CheckMark
+                    onClick={() => handleMarker(id, done)}
                     color={done
                         ? CHECKMARK_COLORS.done
                         : CHECKMARK_COLORS.undone}>
@@ -105,6 +126,7 @@ export const Today = () => {
                 <ul>
                     {tasks.map(h => <DailyTasks
                         key={h.id}
+                        id={h.id}
                         name={h.name}
                         done={h.done}
                         current={h.currentSequence}
