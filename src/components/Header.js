@@ -13,7 +13,7 @@ export const Header = () => {
             <NavTitle to="/">
                 TrackIt
             </NavTitle>
-            <Profile src={user.image} alt="profile picture"/>
+            <Profile data-identifier="avatar" src={user.image} alt="profile picture"/>
         </Navbar>
     );
 };

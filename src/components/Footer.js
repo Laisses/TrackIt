@@ -9,7 +9,7 @@ export const Footer = () => {
     
     return (
         <Div>
-            <Span to="/habitos">Hábitos</Span>
+            <Span data-identifier="habit-page-action" to="/habitos">Hábitos</Span>
             <Progress to="/hoje">
                 <CircularProgressbar
                     value={percentage}
@@ -24,7 +24,7 @@ export const Footer = () => {
                     })}
                 />
             </Progress>
-            <Span to="/historico">Historico</Span>
+            <Span data-identifier="historic-page-action" to="/historico">Historico</Span>
         </Div>
     );
 };
