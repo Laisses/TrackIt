@@ -1,18 +1,21 @@
-import { LIGHT_BLUE, PRIMARY_FONT } from "./constants"
 import styled from "styled-components";
+import { LIGHT_BLUE, PRIMARY_FONT } from "./constants";
 import { Link } from "react-router-dom";
-import 'react-circular-progressbar/dist/styles.css';
+import { AppContext } from "./context";
+import { useContext } from "react";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import 'react-circular-progressbar/dist/styles.css';
 
 export const Footer = () => {
-    const percentage = 66;
+
+    const { progress } = useContext(AppContext);
     
     return (
         <Div>
             <Span data-identifier="habit-page-action" to="/habitos">Hábitos</Span>
-            <Progress to="/hoje">
+            <DailyProgress to="/hoje">
                 <CircularProgressbar
-                    value={percentage}
+                    value={progress}
                     text="Hoje"
                     background
                     backgroundPadding={6}
@@ -23,7 +26,7 @@ export const Footer = () => {
                     trailColor: "transparent"
                     })}
                 />
-            </Progress>
+            </DailyProgress>
             <Span data-identifier="historic-page-action" to="/historico">Historico</Span>
         </Div>
     );
@@ -46,7 +49,7 @@ const Div = styled.div`
     right: 0;
 `;
 
-const Progress = styled(Link)`
+const DailyProgress = styled(Link)`
     width: 90px;
     height: 90px;
     position: fixed;

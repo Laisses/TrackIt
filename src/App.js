@@ -19,10 +19,10 @@ function App() {
   }
 
   const [user, setUser] = useState(userProfile);
-  console.log(user);
+  const [progress, setProgress] = useState(0);
 
   return (
-    <AppContext.Provider value={{ user, setUser }}>
+    <AppContext.Provider value={{ user, setUser, progress, setProgress }}>
       <BrowserRouter>
         <GlobalStyle />
         <Routes>
