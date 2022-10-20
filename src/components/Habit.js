@@ -36,8 +36,6 @@ export const Habit = ({isOpen, setIsOpen, days, setDays, name, setName}) => {
             }
         };
 
-        console.log(config)
-
         axios.post(`${BASE_URL}/habits`, body, config)
             .then(_res => {
                 setIsOpen(false);

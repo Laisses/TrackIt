@@ -1,43 +1,53 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { AppContext } from "./context";
+import { useContext } from "react";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { Habit } from "./Habit";
+import { ThreeDots } from "react-loader-spinner";
 import { Title, Container, Message, WEEKDAYS_COLORS } from "./Common";
-import { LIGHT_BLUE, DARK_GREY, PRIMARY_FONT, WEEKDAYS } from "./constants";
+import { LIGHT_BLUE, DARK_GREY, PRIMARY_FONT, WEEKDAYS, BASE_URL } from "./constants";
 import trashcan from "../assets/images/trashcan.png";
-
-const dummyHabits = [
-	{
-		id: 1,
-		name: "Nome do hábito",
-		days: [1, 3, 5]
-	},
-	{
-		id: 2,
-		name: "Nome do hábito 2",
-		days: [1, 3, 4, 6]
-	}
-];
+import axios from "axios";
 
 export const Habits = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [days, setDays] = useState([]);
     const [name, setName] = useState("");
+    const [savedHabits, setSavedHabits] = useState(undefined);
+    const { user } = useContext(AppContext);
+
+    useEffect(() => {
+        const config = {
+            headers: {
+                Authorization: `Bearer ${user.token}`
+            }
+        };
+
+        axios.get(`${BASE_URL}/habits`, config)
+            .then(res => {
+                setSavedHabits(res.data);
+            })
+            .catch(err => {
+                alert(err.response.data.message);
+            })
+
+    }, []);
 
     const openEntry = () => {
         if (!isOpen) {
             setIsOpen(true);
         }
-    };      
+    };
 
-    const ListOfHabits = ({name, days}) => {
+    const ListOfHabits = ({ name, days }) => {
         return (
             <ListItem>
                 <Trashcan src={trashcan} alt="ícone de deletar" />
                 <SubTitle>{name}</SubTitle>
                 <DaysInput>
-                    {WEEKDAYS.map((d, i)=> <Day
+                    {WEEKDAYS.map((d, i) => <Day
                         key={i}
                         color={days.includes(i)
                             ? WEEKDAYS_COLORS.selected
@@ -48,6 +58,30 @@ export const Habits = () => {
         );
     };
 
+    const Info = () => {
+        if (savedHabits == 0) {
+            return (
+                <Message>
+                    Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!
+                </Message>
+            );
+        } else if (savedHabits === undefined) {
+            return (
+                <Loading />
+            );
+        } else {
+            return (
+                <div>
+                    {savedHabits.map(h => <ListOfHabits
+                        key={h.id}
+                        name={h.name}
+                        days={h.days}
+                    />)}
+                </div>
+            );
+        }
+    }
+
     const habitProps = {
         isOpen,
         setIsOpen,
@@ -56,6 +90,7 @@ export const Habits = () => {
         name,
         setName,
     };
+
     return (
         <>
             <Header />
@@ -65,21 +100,41 @@ export const Habits = () => {
                     <EntryButton onClick={openEntry}>+</EntryButton>
                 </TitleContainer>
                 {isOpen && <Habit {...habitProps} />}
-                {/* <Message>
-                    Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!
-                </Message> */}
-                <div>
-                    {dummyHabits.map(h => <ListOfHabits 
-                        key={h.id}
-                        name={h.name}
-                        days={h.days}
-                    />)}
-                </div>
+                <Info />
             </Container>
             <Footer />
         </>
     );
 };
+
+const Loading = () => {
+    return (
+        <Loader>
+            <ThreeDots
+                height="80"
+                width="80"
+                radius="9"
+                color={LIGHT_BLUE}
+                ariaLabel="three-dots-loading"
+                wrapperStyle={{}}
+                wrapperClassName=""
+                visible={true}
+            />
+        </Loader>
+    );
+};
+
+const Loader = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+    height: 35px;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    margin-left: 20px;
+`;
 
 const Trashcan = styled.img`
     width: 13px;
