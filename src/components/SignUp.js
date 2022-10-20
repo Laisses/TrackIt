@@ -3,10 +3,8 @@ import styled from "styled-components";
 import logo from "../assets/images/logo.png";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ThreeDots } from "react-loader-spinner";
 import { BASE_URL } from "./constants";
-import { LIGHT_BLUE } from "./constants";
-import { BigButton, LinkContainer, TextInput, Logo } from "./Common";
+import { BigButton, LinkContainer, TextInput, Logo, Loading } from "./Common";
 
 export const SignUp = () => {
 
@@ -33,24 +31,7 @@ export const SignUp = () => {
                 setLoading(false);
             });
         setLoading(true);
-    };
-
-    const Loading = () => {
-        return (
-            <Loader>
-                <ThreeDots
-                    height="80"
-                    width="80"
-                    radius="9"
-                    color="#ffffff"
-                    ariaLabel="three-dots-loading"
-                    wrapperStyle={{}}
-                    wrapperClassName=""
-                    visible={true}
-                />
-            </Loader>
-        );
-    };
+    };    
 
     return (
         <SignUpContainer>
@@ -109,16 +90,4 @@ const SignUpContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-`;
-
-const Loader = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 303px;
-    height: 45px;
-    color: #ffffff;
-    background-color: ${LIGHT_BLUE};
-    border: none;
-    border-radius: 5px;
 `;

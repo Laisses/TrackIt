@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { ThreeDots } from "react-loader-spinner";
 import {LIGHT_BLUE, PRIMARY_FONT, DARK_GREY, DARK_BLUE} from "./constants";
 
 export const BigButton = styled.button`
@@ -63,4 +64,33 @@ export const Message = styled.p`
 font-family: ${PRIMARY_FONT};
 font-size: 18px;
 color: ${DARK_GREY};   
+`;
+
+export const Loading = () => {
+    return (
+        <Loader>
+            <ThreeDots
+                height="80"
+                width="80"
+                radius="9"
+                color="#ffffff"
+                ariaLabel="three-dots-loading"
+                wrapperStyle={{}}
+                wrapperClassName=""
+                visible={true}
+            />
+        </Loader>
+    );
+};
+
+const Loader = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 303px;
+    height: 45px;
+    color: #ffffff;
+    background-color: ${LIGHT_BLUE};
+    border: none;
+    border-radius: 5px;
 `;
