@@ -16,6 +16,7 @@ export const Habits = () => {
     const [days, setDays] = useState([]);
     const [name, setName] = useState("");
     const [savedHabits, setSavedHabits] = useState(undefined);
+    const [rataria, setRataria] = useState(false);
     const { user } = useContext(AppContext);
 
     useEffect(() => {
@@ -32,8 +33,10 @@ export const Habits = () => {
             .catch(err => {
                 alert(err.response.data.message);
             })
+        
+            setRataria(false);
 
-    }, []);
+    }, [rataria]);
 
     const openEntry = () => {
         if (!isOpen) {
@@ -41,10 +44,30 @@ export const Habits = () => {
         }
     };
 
-    const ListOfHabits = ({ name, days }) => {
+    const deleteHabit = (id) => {
+        const config = { headers: { Authorization: `Bearer ${user.token}`}
+        };
+        const text = "Você tem certeza que quer deletar esse hábito?"
+
+        if (window.confirm(text) === true) {
+            axios.delete(`${BASE_URL}/habits/${id}`, config)
+            .then(_res => {
+                setRataria(true);
+            })
+            .catch(err => {
+                alert(err.response.data.message);
+            })
+        }
+    }
+
+    const ListOfHabits = ({ name, days, id }) => {
         return (
             <ListItem>
-                <Trashcan src={trashcan} alt="ícone de deletar" />
+                <Trashcan 
+                    src={trashcan} 
+                    alt="ícone de deletar" 
+                    onClick={() => deleteHabit(id)}
+                    />
                 <SubTitle>{name}</SubTitle>
                 <DaysInput>
                     {WEEKDAYS.map((d, i) => <Day
@@ -56,7 +79,7 @@ export const Habits = () => {
                 </DaysInput>
             </ListItem>
         );
-    };
+    };    
 
     const Info = () => {
         if (savedHabits == 0) {
@@ -74,6 +97,7 @@ export const Habits = () => {
                 <div>
                     {savedHabits.map(h => <ListOfHabits
                         key={h.id}
+                        id={h.id}
                         name={h.name}
                         days={h.days}
                     />)}
@@ -89,6 +113,7 @@ export const Habits = () => {
         setDays,
         name,
         setName,
+        setRataria,
     };
 
     return (
