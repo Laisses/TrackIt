@@ -36,6 +36,11 @@ export const Habit = ({isOpen, setIsOpen, days, setDays, name, setName, setRatar
             }
         };
 
+        if (days.length === 0) {
+            alert("Você deve selecionar pelo menos 1 dia");
+            return;
+        }
+
         axios.post(`${BASE_URL}/habits`, body, config)
             .then(_res => {
                 setIsOpen(false);
