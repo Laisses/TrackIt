@@ -7,7 +7,7 @@ import { ThreeDots } from "react-loader-spinner";
 import { TextInput, WEEKDAYS_COLORS } from "./Common";
 import { LIGHT_BLUE, PRIMARY_FONT, WEEKDAYS, BASE_URL } from "./constants";
 
-export const Habit = ({isOpen, setIsOpen, days, setDays, name, setName, setRataria}) => {
+export const Habit = ({isOpen, setIsOpen, days, setDays, name, setName, onCreate}) => {
     
     const [loading, setLoading] = useState(false);
     const { user } = useContext(AppContext);
@@ -28,7 +28,7 @@ export const Habit = ({isOpen, setIsOpen, days, setDays, name, setName, setRatar
         }
     };
 
-    const createNewHabit = () => {
+    const createNewHabit = async () => {
         const body = {name, days};
         const config = {
             headers: {
@@ -41,20 +41,21 @@ export const Habit = ({isOpen, setIsOpen, days, setDays, name, setName, setRatar
             return;
         }
 
-        axios.post(`${BASE_URL}/habits`, body, config)
-            .then(_res => {
-                setIsOpen(false);
-                setDays([]);
-                setName("");
-                setLoading(false);
-                setRataria(true);
-            })
-            .catch(err => {
-                alert(err.response.data.message);
-                setLoading(false);
-            })
-        
         setLoading(true);
+        
+        try {
+            await axios.post(`${BASE_URL}/habits`, body, config);
+            setIsOpen(false);
+            setDays([]);
+            setName("");
+            await onCreate();
+            setLoading(false);
+        } catch (err) {
+            alert(err.response.data.message);
+            setLoading(false);
+        }
+        
+
     }
 
     return (

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import logo from "../assets/images/logo.png";
 import axios from "axios";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { AppContext } from "./context";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "./constants";
@@ -25,13 +25,15 @@ export const Login = () => {
         axios.post(`${BASE_URL}/auth/login`, body)
             .then(res => {
                 setLoading(false);
-                setUser({
+                const user = {
                     name: res.data.name,
                     image: res.data.image,
                     email: res.data.email,
                     password: res.data.password,
                     token: res.data.token,
-                });
+                };
+                setUser(user);
+                localStorage.setItem("user", JSON.stringify(user));
                 navigate("/hoje");
             })
             .catch(err => {
@@ -41,6 +43,14 @@ export const Login = () => {
 
         setLoading(true);
     }
+
+    useEffect(() => {
+        const userStr = localStorage.getItem("user");
+        if (userStr) {
+            setUser(JSON.parse(userStr));
+            navigate("/hoje");
+        }
+    }, [setUser, navigate]);
 
     return (
         <LoginContainer>

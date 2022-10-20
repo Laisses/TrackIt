@@ -10,33 +10,45 @@ import { Title, Container, Message, WEEKDAYS_COLORS } from "./Common";
 import { LIGHT_BLUE, DARK_GREY, PRIMARY_FONT, WEEKDAYS, BASE_URL } from "./constants";
 import trashcan from "../assets/images/trashcan.png";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+
 
 export const Habits = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [days, setDays] = useState([]);
     const [name, setName] = useState("");
     const [savedHabits, setSavedHabits] = useState(undefined);
-    const [rataria, setRataria] = useState(false);
-    const { user } = useContext(AppContext);
-
-    useEffect(() => {
+    const { user, setUser } = useContext(AppContext);
+    const navigate = useNavigate();
+    
+    const refreshHabits = async token => {
         const config = {
             headers: {
-                Authorization: `Bearer ${user.token}`
+                Authorization: `Bearer ${token}`
             }
         };
 
-        axios.get(`${BASE_URL}/habits`, config)
-            .then(res => {
-                setSavedHabits(res.data);
-            })
-            .catch(err => {
-                alert(err.response.data.message);
-            })
-        
-            setRataria(false);
+        try {
+            const res = await axios.get(`${BASE_URL}/habits`, config);
+            setSavedHabits(res.data);
+        } catch (err) {
+            alert(err.response.data.message);
+        }
+    };
 
-    }, [rataria]);
+    useEffect(() => {
+        const userStr = localStorage.getItem("user");
+        if (userStr) {
+            setUser(JSON.parse(userStr));
+        } else {
+            navigate("/");
+        }
+        if (user.token) {
+            refreshHabits(user.token);
+        }
+     }, [setUser, navigate, user.token]);
+     
 
     const openEntry = () => {
         if (!isOpen) {
@@ -44,19 +56,18 @@ export const Habits = () => {
         }
     };
 
-    const deleteHabit = (id) => {
+    const deleteHabit = async id => {
         const config = { headers: { Authorization: `Bearer ${user.token}`}
         };
         const text = "Você tem certeza que quer deletar esse hábito?"
 
         if (window.confirm(text) === true) {
-            axios.delete(`${BASE_URL}/habits/${id}`, config)
-            .then(_res => {
-                setRataria(true);
-            })
-            .catch(err => {
+            try {
+                await axios.delete(`${BASE_URL}/habits/${id}`, config);
+                await refreshHabits(user.token);
+            } catch (err) {
                 alert(err.response.data.message);
-            })
+            }            
         }
     }
 
@@ -83,15 +94,15 @@ export const Habits = () => {
     };    
 
     const Info = () => {
-        if (savedHabits == 0) {
+        if (savedHabits === undefined) {
+            return (
+                <Loading />
+            );
+        } else if (savedHabits.length === 0) {
             return (
                 <Message data-identifier="no-habit-message">
                     Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!
                 </Message>
-            );
-        } else if (savedHabits === undefined) {
-            return (
-                <Loading />
             );
         } else {
             return (
@@ -114,7 +125,7 @@ export const Habits = () => {
         setDays,
         name,
         setName,
-        setRataria,
+        onCreate: async () => await refreshHabits(user.token),
     };
 
     return (
