@@ -9,7 +9,18 @@ import { History } from "./components/History";
 import { AppContext } from "./components/context";
 
 function App() {
-  
+
+  const userProfile = {
+    name: "",
+    image: "",
+    email: "",
+    password: "",
+    token: "",
+  }
+
+  const [user, setUser] = useState(userProfile);
+  console.log(user);
+
   return (
     <AppContext.Provider value={{ user, setUser }}>
       <BrowserRouter>
