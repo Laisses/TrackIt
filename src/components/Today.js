@@ -8,7 +8,7 @@ import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { Title, Container, Message } from "./Common";
 import { day } from "./Date";
-import { DARK_GREY, LIGHT_BLUE, PRIMARY_FONT, BASE_URL } from "./constants";
+import { DARK_GREY, LIGHT_BLUE, PRIMARY_FONT, BASE_URL, GREEN } from "./constants";
 import checkmark from "../assets/images/checkmark.png";
 
 const CHECKMARK_COLORS = {
@@ -28,8 +28,9 @@ export const Today = () => {
     const [date, setDate] = useState(undefined);
     const [weekday, setWeekday] = useState(undefined);
     const [tasks, setTasks] = useState(undefined);
-    const { user, setUser } = useContext(AppContext);
+    const { user, setUser, progress, setProgress } = useContext(AppContext);
     const navigate = useNavigate();
+    console.log(progress)
 
     const refreshHabits = async token => {
         const config = { headers: { Authorization: `Bearer ${token}` } };
@@ -57,12 +58,20 @@ export const Today = () => {
         }
     }, [setUser, navigate, user.token]);
 
+    const calculateProgress = () => {
+        const totalValue = tasks.length;
+        const doneTaks = tasks.filter(t => t.done === true);
+        const partialValue = doneTaks.length + 1;
+        return Math.round((partialValue * 100) / totalValue);
+    }
+
     const handleMarker = async (id, done) => {
         const config = { headers: { Authorization: `Bearer ${user.token}`}};
 
         if(!done) {
             try {
                 await axios.post(`${BASE_URL}/habits/${id}/check`, {}, config);
+                setProgress(calculateProgress())
                 await refreshHabits(user.token);
             } catch (err) {
                 alert(err.response.data.message);
@@ -70,6 +79,7 @@ export const Today = () => {
         } else {
             try{
                 await axios.post(`${BASE_URL}/habits/${id}/uncheck`, {}, config);
+                setProgress(calculateProgress())
                 await refreshHabits(user.token);
             } catch (err) {
                 alert(err.response.data.message);
@@ -135,7 +145,19 @@ export const Today = () => {
                 </ul>
             );
         }
-    }
+    };
+
+    const Subtitle = () => {
+        if (progress === 0) {
+            return (
+                <NoPercentage>Nenhum hábito concluído ainda</NoPercentage>
+            );
+        } else {
+            return (
+                <Percentage>{progress}% dos hábitos concluídos</Percentage>
+            );
+        }
+    };
 
     return (
         <>
@@ -143,7 +165,7 @@ export const Today = () => {
             <Container>
                 <TitleContainer>
                     <Title>{weekday}, {date}</Title>
-                    <Subtitle>Nenhum hábito concluído ainda</Subtitle>
+                    <Subtitle />
                 </TitleContainer>
                 <DailyInfo />
             </Container>
@@ -175,10 +197,17 @@ const CheckMark = styled.div`
     }
 `;
 
-const Subtitle = styled.div`
+const NoPercentage = styled.div`
     font-family: ${PRIMARY_FONT};
     font-size: 18px;
     color: #bababa;
+    margin-top: 5px;
+`;
+
+const Percentage = styled.div`
+    font-family: ${PRIMARY_FONT};
+    font-size: 18px;
+    color: ${GREEN};
     margin-top: 5px;
 `;
 
