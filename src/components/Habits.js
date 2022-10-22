@@ -19,7 +19,7 @@ export const Habits = () => {
     const [days, setDays] = useState([]);
     const [name, setName] = useState("");
     const [savedHabits, setSavedHabits] = useState(undefined);
-    const { user, setUser } = useContext(AppContext);
+    const { user, setUser, setDailyHabits, dailyHabits, setProgress } = useContext(AppContext);
     const navigate = useNavigate();
     
     const refreshHabits = async token => {
@@ -30,8 +30,10 @@ export const Habits = () => {
         };
 
         try {
-            const res = await axios.get(`${BASE_URL}/habits`, config);
-            setSavedHabits(res.data);
+            const allHabits = await axios.get(`${BASE_URL}/habits`, config);
+            setSavedHabits(allHabits.data);
+            const todayHabits = await axios.get(`${BASE_URL}/habits/today`, config);
+            setDailyHabits(todayHabits.data);
         } catch (err) {
             alert(err.response.data.message);
         }
@@ -47,8 +49,7 @@ export const Habits = () => {
         if (user.token) {
             refreshHabits(user.token);
         }
-     }, [setUser, navigate, user.token]);
-     
+     }, [setUser, navigate, user.token]);     
 
     const openEntry = () => {
         if (!isOpen) {

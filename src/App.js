@@ -20,10 +20,11 @@ function App() {
 
   const [user, setUser] = useState(userProfile);
   const [progress, setProgress] = useState(0);
+  const [dailyHabits, setDailyHabits] = useState(undefined);
 
   return (
     <AppContext.Provider
-      value={{ user, setUser, progress, setProgress }}
+      value={{ user, setUser, progress, setProgress, dailyHabits, setDailyHabits }}
     >
       <BrowserRouter>
         <GlobalStyle />

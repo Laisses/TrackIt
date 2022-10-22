@@ -8,14 +8,24 @@ import 'react-circular-progressbar/dist/styles.css';
 
 export const Footer = () => {
 
-    const { progress } = useContext(AppContext);
-    
+    const { dailyHabits } = useContext(AppContext);
+
+    const progress = () => {
+        if (dailyHabits === undefined) {
+            return 0;
+        }
+        const totalValue = dailyHabits.length;
+        const doneTaks = dailyHabits.filter(t => t.done === true);
+        const partialValue = doneTaks.length;
+        return Math.round((partialValue * 100) / totalValue);
+    };
+
     return (
         <Div>
             <Span data-identifier="habit-page-action" to="/habitos">Hábitos</Span>
             <DailyProgress to="/hoje">
                 <CircularProgressbar
-                    value={progress}
+                    value={progress()}
                     text="Hoje"
                     background
                     backgroundPadding={6}
@@ -37,7 +47,7 @@ const Div = styled.div`
     font-size: 18px;
     width: 100%;
     height: 70px;
-    background-color: #ffffff;    
+    background-color: #ffffff;
     padding-right: 36px;
     padding-left: 36px;
 
@@ -55,7 +65,7 @@ const DailyProgress = styled(Link)`
     position: fixed;
     bottom: 10px;
     left: 50%;
-    margin-left: -45px;    
+    margin-left: -45px;
 `;
 
 const Span = styled(Link)`

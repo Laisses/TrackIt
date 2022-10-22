@@ -42,7 +42,7 @@ export const Habit = ({isOpen, setIsOpen, days, setDays, name, setName, onCreate
         }
 
         setLoading(true);
-        
+
         try {
             await axios.post(`${BASE_URL}/habits`, body, config);
             setIsOpen(false);
@@ -54,8 +54,6 @@ export const Habit = ({isOpen, setIsOpen, days, setDays, name, setName, onCreate
             alert(err.response.data.message);
             setLoading(false);
         }
-        
-
     }
 
     return (

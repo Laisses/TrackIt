@@ -25,16 +25,16 @@ const CHECKMARK_COLORS = {
 }
 
 export const Today = () => {
-    const [tasks, setTasks] = useState(undefined);
-    const { user, setUser, progress, setProgress } = useContext(AppContext);
+  
+    const { user, setUser, progress, setProgress, dailyHabits, setDailyHabits } = useContext(AppContext);
     const navigate = useNavigate();
 
-    const refreshHabits = async token => {
+    const refreshDailyHabits = async token => {
         const config = { headers: { Authorization: `Bearer ${token}` } };
 
         try {
             const res = await axios.get(`${BASE_URL}/habits/today`, config);
-            setTasks(res.data);
+            setDailyHabits(res.data);
         } catch (err) {
             alert(err.response.data.message);
         }
@@ -48,33 +48,24 @@ export const Today = () => {
             navigate("/");
         }
         if (user.token) {
-            refreshHabits(user.token);
+            refreshDailyHabits(user.token);
         }
     }, [setUser, navigate, user.token]);
-
-    useEffect(() => {
-        if(!tasks) return;
-        const totalValue = tasks.length;
-        const doneTaks = tasks.filter(t => t.done === true);
-        const partialValue = doneTaks.length;
-        const percentage = Math.round((partialValue * 100) / totalValue);
-        setProgress(percentage);
-    }, [setProgress, tasks]);
-
+ 
     const handleMarker = async (id, done) => {
         const config = { headers: { Authorization: `Bearer ${user.token}`}};
 
         if(!done) {
             try {
                 await axios.post(`${BASE_URL}/habits/${id}/check`, {}, config);
-                await refreshHabits(user.token);
+                await refreshDailyHabits(user.token);
             } catch (err) {
                 alert(err.response.data.message);
             }
         } else {
             try{
                 await axios.post(`${BASE_URL}/habits/${id}/uncheck`, {}, config);
-                await refreshHabits(user.token);
+                await refreshDailyHabits(user.token);
             } catch (err) {
                 alert(err.response.data.message);
             }
@@ -116,11 +107,11 @@ export const Today = () => {
     };
 
     const DailyInfo = () => {
-        if (tasks === undefined) {
+        if (dailyHabits === undefined) {
             return (
                 <Loading />
             );
-        } else if (tasks.length === 0) {
+        } else if (dailyHabits.length === 0) {
             return (
                 <Message>
                     Não encontramos nenhum hábito para você :(
@@ -129,7 +120,7 @@ export const Today = () => {
         } else {
             return (
                 <ul>
-                    {tasks.map(h => <DailyTasks
+                    {dailyHabits.map(h => <DailyTasks
                         key={h.id}
                         id={h.id}
                         name={h.name}
