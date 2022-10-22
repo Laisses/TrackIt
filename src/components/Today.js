@@ -54,20 +54,16 @@ export const Today = () => {
     const handleMarker = async (id, done) => {
         const config = { headers: { Authorization: `Bearer ${user.token}`}};
 
-        if(!done) {
-            try {
+        try {
+            if(!done) {
                 await axios.post(`${BASE_URL}/habits/${id}/check`, {}, config);
                 await refreshDailyHabits(user.token);
-            } catch (err) {
-                alert(err.response.data.message);
-            }
-        } else {
-            try{
+            } else {
                 await axios.post(`${BASE_URL}/habits/${id}/uncheck`, {}, config);
                 await refreshDailyHabits(user.token);
-            } catch (err) {
-                alert(err.response.data.message);
             }
+        } catch (err) {
+            alert(err.response.data.message);
         }
     };
 
