@@ -17,21 +17,18 @@ export const SignUp = () => {
         setForm({ ...form, [name]: value });
     };
 
-    const createUser = () => {
-        const body = { ...form };
-
-        axios.post(`${BASE_URL}/auth/sign-up`, body)
-            .then((res) => {
-                setLoading(false);
-                alert("Usuário cadastrado com sucesso!");
-                navigate("/");
-            })
-            .catch(err => {
-                alert(err.response.data.message);                
-                setLoading(false);
-            });
+    const createUser = async () => {
         setLoading(true);
-    };    
+        try {
+            await axios.post(`${BASE_URL}/auth/sign-up`, form);
+            setLoading(false);
+            alert("Usuário cadastrado com sucesso!");
+            navigate("/");
+        } catch (err) {
+            alert(err.response.data.message);
+            setLoading(false);
+        }
+    };
 
     return (
         <SignUpContainer>

@@ -19,29 +19,25 @@ export const Login = () => {
         setForm({ ...form, [name]: value });
     };
 
-    const signIn = () => {
-        const body = { ...form };
-
-        axios.post(`${BASE_URL}/auth/login`, body)
-            .then(res => {
-                setLoading(false);
-                const user = {
-                    name: res.data.name,
-                    image: res.data.image,
-                    email: res.data.email,
-                    password: res.data.password,
-                    token: res.data.token,
-                };
-                setUser(user);
-                localStorage.setItem("user", JSON.stringify(user));
-                navigate("/hoje");
-            })
-            .catch(err => {
-                alert(err.response.data.message);
-                setLoading(false);
-            });
-
+    const signIn = async () => {
         setLoading(true);
+        try {
+            const res = await axios.post(`${BASE_URL}/auth/login`, form);
+            setLoading(false);
+            const user = {
+                name: res.data.name,
+                image: res.data.image,
+                email: res.data.email,
+                password: res.data.password,
+                token: res.data.token,
+            };
+            setUser(user);
+            localStorage.setItem("user", JSON.stringify(user));
+            navigate("/hoje");
+        } catch (err) {
+            alert(err.response.data.message);
+            setLoading(false);
+        }
     }
 
     useEffect(() => {
