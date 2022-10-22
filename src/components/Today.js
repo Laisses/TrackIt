@@ -57,10 +57,10 @@ export const Today = () => {
         try {
             if(!done) {
                 await axios.post(`${BASE_URL}/habits/${id}/check`, {}, config);
-                await refreshDailyHabits(user.token);
+                await refreshDailyHabits(user.token, setDailyHabits);
             } else {
                 await axios.post(`${BASE_URL}/habits/${id}/uncheck`, {}, config);
-                await refreshDailyHabits(user.token);
+                await refreshDailyHabits(user.token, setDailyHabits);
             }
         } catch (err) {
             alert(err.response.data.message);
