@@ -25,8 +25,6 @@ const CHECKMARK_COLORS = {
 }
 
 export const Today = () => {
-    const [date, setDate] = useState(undefined);
-    const [weekday, setWeekday] = useState(undefined);
     const [tasks, setTasks] = useState(undefined);
     const { user, setUser, progress, setProgress } = useContext(AppContext);
     const navigate = useNavigate();
@@ -43,9 +41,6 @@ export const Today = () => {
     };
 
     useEffect(() => {
-        setDate(day.date);
-        setWeekday(day.weekday);
-
         const userStr = localStorage.getItem("user");
         if (userStr) {
             setUser(JSON.parse(userStr));
@@ -164,7 +159,7 @@ export const Today = () => {
             <Header />
             <Container>
                 <TitleContainer>
-                    <Title>{weekday}, {date}</Title>
+                    <Title>{day.weekday}, {day.date}</Title>
                     <Subtitle />
                 </TitleContainer>
                 <DailyInfo />
