@@ -67,7 +67,7 @@ export const Today = () => {
         }
     };
 
-    const DailyTasks = ({ id, name, done, current, highest }) => {
+    const DailyTasks = ({ id, name, done, currentSequence, highestSequence }) => {
         return (
             <List data-identifier="today-infos">
                 <div>
@@ -77,15 +77,15 @@ export const Today = () => {
                             color={done
                                 ? CHECKMARK_COLORS.done
                                 : CHECKMARK_COLORS.undone}>
-                            {current} {current === 1 ? "dia" : "dias"}
+                            {currentSequence} {currentSequence === 1 ? "dia" : "dias"}
                         </CurrentSpan>
                     </P>
                     <P>
                         Seu recorde: <HighestSpan
-                            color={done && current === highest
+                            color={done && currentSequence === highestSequence
                                 ? CHECKMARK_COLORS.done
                                 : CHECKMARK_COLORS.undone}>
-                            {highest} {highest === 1 ? "dia" : "dias"}
+                            {highestSequence} {highestSequence === 1 ? "dia" : "dias"}
                         </HighestSpan>
                     </P>
                 </div>
@@ -115,14 +115,7 @@ export const Today = () => {
         } else {
             return (
                 <ul>
-                    {dailyHabits.map(h => <DailyTasks
-                        key={h.id}
-                        id={h.id}
-                        name={h.name}
-                        done={h.done}
-                        current={h.currentSequence}
-                        highest={h.highestSequence}
-                    />)}
+                    {dailyHabits.map(h => <DailyTasks key={h.id} {...h} />)}
                 </ul>
             );
         }
