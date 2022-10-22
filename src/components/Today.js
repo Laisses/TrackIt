@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import axios from "axios";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { AppContext } from "./context";
 import { useNavigate } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";

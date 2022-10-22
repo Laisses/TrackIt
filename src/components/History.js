@@ -1,5 +1,4 @@
 import styled from "styled-components";
-//import { useState } from "react";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { Title, Container, Message } from "./Common";

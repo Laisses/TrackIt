@@ -67,17 +67,17 @@ export const Habits = () => {
                 await refreshHabits(user.token);
             } catch (err) {
                 alert(err.response.data.message);
-            }            
+            }
         }
     }
 
     const ListOfHabits = ({ name, days, id }) => {
         return (
             <ListItem>
-                <Trashcan 
+                <Trashcan
                     data-identifier="delete-habit-btn"
-                    src={trashcan} 
-                    alt="ícone de deletar" 
+                    src={trashcan}
+                    alt="ícone de deletar"
                     onClick={() => deleteHabit(id)}
                     />
                 <SubTitle data-identifier="habit-name">{name}</SubTitle>
@@ -91,7 +91,7 @@ export const Habits = () => {
                 </DaysInput>
             </ListItem>
         );
-    };    
+    };
 
     const Info = () => {
         if (savedHabits === undefined) {
@@ -194,7 +194,7 @@ const ListItem = styled.li`
     height: 91px;
     background-color: #ffffff;
     border-radius: 5px;
-    margin: 10px auto;    
+    margin: 10px auto;
     padding-left: 15px;
     position: relative;
 `;
@@ -232,7 +232,7 @@ const Day = styled.div`
     background-color: ${({ color }) => color.backgroundColor};
     border: ${({ color }) => color.border};
     width: 30px;
-    height: 30px;    
+    height: 30px;
     border-radius: 5px;
     margin-right: 4px;
 `;

@@ -16,7 +16,7 @@ export const App = () => {
     email: "",
     password: "",
     token: "",
-  }
+  };
 
   const [user, setUser] = useState(userProfile);
   const [progress, setProgress] = useState(0);
