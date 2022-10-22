@@ -19,10 +19,10 @@ export const Habits = () => {
     const [days, setDays] = useState([]);
     const [name, setName] = useState("");
     const [savedHabits, setSavedHabits] = useState(undefined);
-    const { user, setUser, setDailyHabits, dailyHabits, setProgress } = useContext(AppContext);
+    const { user, setUser, setDailyHabits } = useContext(AppContext);
     const navigate = useNavigate();
-    
-    const refreshHabits = async token => {
+
+    const refreshHabits = async (token, setSavedHabits, setDailyHabits) => {
         const config = {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -41,15 +41,14 @@ export const Habits = () => {
 
     useEffect(() => {
         const userStr = localStorage.getItem("user");
-        if (userStr) {
+        if (user.token) {
+            refreshHabits(user.token);
+        } else if (userStr) {
             setUser(JSON.parse(userStr));
         } else {
             navigate("/");
         }
-        if (user.token) {
-            refreshHabits(user.token);
-        }
-     }, [setUser, navigate, user.token]);     
+     }, [setUser, navigate, user.token, setSavedHabits, setDailyHabits]);
 
     const openEntry = () => {
         if (!isOpen) {

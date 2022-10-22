@@ -29,7 +29,7 @@ export const Today = () => {
     const { user, setUser, progress, dailyHabits, setDailyHabits } = useContext(AppContext);
     const navigate = useNavigate();
 
-    const refreshDailyHabits = async token => {
+    const refreshDailyHabits = async (token, setDailyHabits) => {
         const config = { headers: { Authorization: `Bearer ${token}` } };
 
         try {
@@ -42,16 +42,15 @@ export const Today = () => {
 
     useEffect(() => {
         const userStr = localStorage.getItem("user");
-        if (userStr) {
+        if (user.token) {
+            refreshDailyHabits(user.token, setDailyHabits);
+        } else if (userStr) {
             setUser(JSON.parse(userStr));
         } else {
             navigate("/");
         }
-        if (user.token) {
-            refreshDailyHabits(user.token);
-        }
-    }, [setUser, navigate, user.token]);
- 
+    }, [setUser, navigate, user.token, setDailyHabits]);
+
     const handleMarker = async (id, done) => {
         const config = { headers: { Authorization: `Bearer ${user.token}`}};
 
