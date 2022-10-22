@@ -8,7 +8,7 @@ import { Today } from "./components/Today";
 import { History } from "./components/History";
 import { AppContext } from "./components/context";
 
-function App() {
+export const App = () => {
 
   const userProfile = {
     name: "",
@@ -38,6 +38,4 @@ function App() {
       </BrowserRouter>
     </AppContext.Provider>
   );
-}
-
-export default App;
+};
