@@ -35,6 +35,7 @@ export const Habits = () => {
             const todayHabits = await axios.get(`${BASE_URL}/habits/today`, config);
             setDailyHabits(todayHabits.data);
         } catch (err) {
+            debugger
             alert(err.response.data.message);
         }
     };
@@ -42,7 +43,7 @@ export const Habits = () => {
     useEffect(() => {
         const userStr = localStorage.getItem("user");
         if (user.token) {
-            refreshHabits(user.token);
+            refreshHabits(user.token, setSavedHabits, setDailyHabits);
         } else if (userStr) {
             setUser(JSON.parse(userStr));
         } else {
@@ -64,7 +65,7 @@ export const Habits = () => {
         if (window.confirm(text) === true) {
             try {
                 await axios.delete(`${BASE_URL}/habits/${id}`, config);
-                await refreshHabits(user.token);
+                await refreshHabits(user.token, setSavedHabits, setDailyHabits);
             } catch (err) {
                 alert(err.response.data.message);
             }
@@ -125,7 +126,7 @@ export const Habits = () => {
         setDays,
         name,
         setName,
-        onCreate: async () => await refreshHabits(user.token),
+        onCreate: async () => await refreshHabits(user.token, setSavedHabits, setDailyHabits),
     };
 
     return (
