@@ -121,17 +121,10 @@ export const Today = () => {
         }
     };
 
-    const Subtitle = () => {
-        if (progress === 0) {
-            return (
-                <NoPercentage>Nenhum hábito concluído ainda</NoPercentage>
-            );
-        } else {
-            return (
-                <Percentage>{progress}% dos hábitos concluídos</Percentage>
-            );
-        }
-    };
+    const Subtitle = () =>
+        progress === 0
+        ? <NoPercentage>Nenhum hábito concluído ainda</NoPercentage>
+        : <Percentage>{progress}% dos hábitos concluídos</Percentage>;
 
     return (
         <>
