@@ -30,7 +30,6 @@ export const Today = () => {
     const [tasks, setTasks] = useState(undefined);
     const { user, setUser, progress, setProgress } = useContext(AppContext);
     const navigate = useNavigate();
-    console.log(progress)
 
     const refreshHabits = async token => {
         const config = { headers: { Authorization: `Bearer ${token}` } };
@@ -58,12 +57,14 @@ export const Today = () => {
         }
     }, [setUser, navigate, user.token]);
 
-    const calculateProgress = () => {
+    useEffect(() => {
+        if(!tasks) return;
         const totalValue = tasks.length;
         const doneTaks = tasks.filter(t => t.done === true);
         const partialValue = doneTaks.length;
-        return Math.round((partialValue * 100) / totalValue);
-    }
+        const percentage = Math.round((partialValue * 100) / totalValue);
+        setProgress(percentage);
+    }, [setProgress, tasks]);
 
     const handleMarker = async (id, done) => {
         const config = { headers: { Authorization: `Bearer ${user.token}`}};
@@ -72,7 +73,6 @@ export const Today = () => {
             try {
                 await axios.post(`${BASE_URL}/habits/${id}/check`, {}, config);
                 await refreshHabits(user.token);
-                setProgress(calculateProgress)
             } catch (err) {
                 alert(err.response.data.message);
             }
@@ -80,7 +80,6 @@ export const Today = () => {
             try{
                 await axios.post(`${BASE_URL}/habits/${id}/uncheck`, {}, config);
                 await refreshHabits(user.token);
-                setProgress(calculateProgress)
             } catch (err) {
                 alert(err.response.data.message);
             }
