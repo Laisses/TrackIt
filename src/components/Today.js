@@ -25,8 +25,8 @@ const CHECKMARK_COLORS = {
 }
 
 export const Today = () => {
-  
-    const { user, setUser, progress, setProgress, dailyHabits, setDailyHabits } = useContext(AppContext);
+
+    const { user, setUser, progress, dailyHabits, setDailyHabits } = useContext(AppContext);
     const navigate = useNavigate();
 
     const refreshDailyHabits = async token => {

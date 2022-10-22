@@ -2,15 +2,15 @@ import styled from "styled-components";
 import { LIGHT_BLUE, PRIMARY_FONT } from "./constants";
 import { Link } from "react-router-dom";
 import { AppContext } from "./context";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import 'react-circular-progressbar/dist/styles.css';
 
 export const Footer = () => {
 
-    const { dailyHabits } = useContext(AppContext);
+    const { dailyHabits, setProgress } = useContext(AppContext);
 
-    const progress = () => {
+    const calculateProgress = () => {
         if (dailyHabits === undefined || dailyHabits.length === 0) {
             return 0;
         }
@@ -18,13 +18,18 @@ export const Footer = () => {
         const doneHabits = dailyHabits.filter(t => t.done);
         return Math.round((doneHabits.length * 100) / dailyHabits.length);
     };
+    const progress = calculateProgress();
+
+    useEffect(() => {
+        setProgress(progress);
+    }, [setProgress, progress]);
 
     return (
         <Div>
             <Span data-identifier="habit-page-action" to="/habitos">Hábitos</Span>
             <DailyProgress to="/hoje">
                 <CircularProgressbar
-                    value={progress()}
+                    value={progress}
                     text="Hoje"
                     background
                     backgroundPadding={6}
