@@ -11,13 +11,12 @@ export const Footer = () => {
     const { dailyHabits } = useContext(AppContext);
 
     const progress = () => {
-        if (dailyHabits === undefined) {
+        if (dailyHabits === undefined || dailyHabits.length === 0) {
             return 0;
         }
-        const totalValue = dailyHabits.length;
-        const doneTaks = dailyHabits.filter(t => t.done === true);
-        const partialValue = doneTaks.length;
-        return Math.round((partialValue * 100) / totalValue);
+
+        const doneHabits = dailyHabits.filter(t => t.done);
+        return Math.round((doneHabits.length * 100) / dailyHabits.length);
     };
 
     return (
