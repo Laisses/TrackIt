@@ -1,70 +1,50 @@
-# Getting Started with Create React App
+# [TrackIt](https://track-it-orcin-nine.vercel.app/)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+O TrackIt é um aplicativo da web que ajuda os usuários a acompanhar suas atividades e hábitos diários. Com TrackIt, os usuários podem definir metas para si mesmos, criar uma lista de atividades que desejam acompanhar e marcar cada atividade como concluída ao longo do dia. O aplicativo também fornece visualizações do progresso do usuário ao longo do tempo, ajudando-os a se manter motivados e no caminho certo. 
 
-## Available Scripts
+![](https://github.com/Laisses/TrackIt/blob/main/src/assets/demo.gif)
 
-In the project directory, you can run:
+## Começando
 
-### `npm start`
+Para usar o TrackIt, você precisará criar uma conta. Depois de ter uma conta, você pode configurar suas metas diárias e começar a acompanhar suas atividades. O aplicativo está disponível online, para que você possa acessá-lo de qualquer dispositivo com conexão à Internet.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Funcionalidades
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Criar uma lista de atividades para rastrear
+- Definir metas diárias para cada atividade
+- Marcar atividades como concluídas ao longo do dia
+- Visualizar o progresso ao longo do tempo com visualizações
+- Histórico dos hábitos (a ser implementado)
 
-### `npm test`
+## Tecnologias utilizadas
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+O Projeto11 TrackIt é construído com as seguintes tecnologias:
 
-### `npm run build`
+- React
+- Axios
+- Styled Components
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Rodando o projeto localmente
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Para rodar o TrackIt localmente, siga as instruções abaixo:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. Clone o repositório para sua máquina local usando o seguinte comando no terminal:
+	
+`git clone https://github.com/Laisses/projeto11-trackit.git`
 
-### `npm run eject`
+2. Na pasta do projeto, abra um terminal e instale as dependências do projeto usando o seguinte comando:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+`npm install`
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+3. Execute o seguinte comando para iniciar o servidor localmente:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+`npm start`
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+4. Acesse o aplicativo da web em seu navegador em `http://localhost:3000`.
 
-## Learn More
+Pronto! Agora você pode usar o TrackIt localmente em sua máquina.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Contribuindo
+Contribuições são bem-vindas! Se você tiver uma ideia para um novo recurso ou quiser ajudar a corrigir um bug, envie uma solicitação pull.
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
